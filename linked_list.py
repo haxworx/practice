@@ -40,6 +40,25 @@ class LinkedList:
     def __iter__(self):
         return self
 
+    def remove(self, item):
+        node = self.head
+        while node is not None:
+            if node.data == item:
+                if not node.prev:
+                    self.head = node.next
+                    if node.next:
+                        node.next.prev = None
+                elif not node.next:
+                    node.prev.next = None;
+                    self.tail = node.prev
+                else:
+                    node.prev.next = node.next
+                    node.next.prev = node.prev
+                del(node)
+                self.length -= 1
+                return
+            node = node.next
+
     def __next__(self):
         if self.curr is None:
             self.curr = self.head
@@ -52,15 +71,35 @@ class LinkedList:
 
 
 ll = LinkedList()
-for i in range(0, 15):
-    ll.append(i)
+for i in range(0, 16):
+    ll.append("item{}" . format(i))
 
 for i in ll:
     print(i)
-print("rev")
-for i in range(15, 20):
-    ll.append(i)
+print()
+
+ll.remove("item14")
+ll.remove("item0")
+ll.remove("item3")
+for i in ll:
+    print(i)
+
+print("again\n")
+
 for i in reversed(ll):
+    print(i)
+print("again\n")
+
+for i in ll:
     print(i)
 
 print(len(ll))
+
+for i in ll:
+    ll.remove(i)
+
+print(len(ll))
+for i in range(0, 16):
+    ll.append("list{}" . format(i))
+for i in ll:
+    print(i)
